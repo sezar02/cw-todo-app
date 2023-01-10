@@ -12,11 +12,11 @@ pipeline {
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         APP_REPO_NAME = "clarusway-repo/cw-todo-app"
         APP_NAME = "todo"
-        // HOME_FOLDER = "/home/ec2-user"
-        // GIT_FOLDER = sh(script:'echo ${GIT_URL} | sed "s/.*\\///;s/.git$//"', returnStdout:true).trim()
+
     }
 
-stages {
+
+    stages {
 
         stage('Create Infrastructure for the App') {
             steps {
@@ -38,6 +38,7 @@ stages {
                 """
             }
         }
+
 
         stage('Build App Docker Image') {
             steps {
@@ -69,6 +70,7 @@ stages {
             }
         }
 
+
         stage('wait the instance') {
             steps {
                 script {
@@ -79,6 +81,8 @@ stages {
             }
         }
 
+
+
         stage('Deploy the App') {
             steps {
                 echo 'Deploy the App'
@@ -88,6 +92,7 @@ stages {
                 ansiblePlaybook credentialsId: 'N.VirginiaKey', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory_aws_ec2.yml', playbook: 'docker_project.yml'
              }
         }
+
 
         stage('Destroy the infrastructure'){
             steps{
@@ -104,15 +109,6 @@ stages {
                 """
             }
         }
-
-    }
-
-
-
-
-
-
-
 
     }
 
@@ -136,17 +132,4 @@ stages {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+    }
