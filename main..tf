@@ -36,8 +36,8 @@ resource "aws_instance" "managed_nodes" {
   iam_instance_profile = "jenkins-project-profile-${var.user}"
   tags = {
     Name = "ansible_${element(var.tags, count.index )}"
-    stack = "ansible_project-1"
-    environment = "development_1"
+    stack = "ansible_project"
+    environment = "development"
   }
 }
 
